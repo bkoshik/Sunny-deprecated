@@ -1,7 +1,6 @@
 use crate::modules::config::Config;
 
 // ========== Structure for Simpler Getting Data about Weather ==========
-#[derive(Debug)]
 pub struct Weather {
     pub region: String,
     pub updated_time: String,
@@ -15,7 +14,6 @@ pub struct Weather {
     pub stuff: Stuff,
 }
 
-#[derive(Debug)]
 pub struct Stuff {
     pub code_of_weather: String,
     pub config: Config,
@@ -25,7 +23,7 @@ impl Weather {
     pub fn new(config: Config) -> Weather {
         let stuff = Stuff {
             code_of_weather: "0".to_string(),
-            config: config
+            config: config,
         };
 
         return Self {
