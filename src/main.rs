@@ -1,3 +1,14 @@
+/*!
+Main function does:
+  1. Creating new thread for loading 2 hashmaps of ASCII arts into RAM
+  2. Make config and weather variable
+  3. Fetching data of weather from wttr.in
+  4. Getting a result from second thread
+  5. Getting ASCII art that chooses by wwo_code
+  6. Getting formatted lines with name of data, separator and data
+  7. Printing information
+!*/
+
 use std::io::Error;
 use crate::ascii_arts::load_ascii_arts;
 use crate::config::ConfigDeser;
@@ -8,14 +19,15 @@ mod config;
 mod ascii_arts;
 
 fn main() -> Result<(), Error> {
-    let mut weather = Weather::new(ConfigDeser::load_config_args()?);
-
     // Creating new thread
     let handle_load_base = std::thread::spawn(move || {
         return load_ascii_arts();
     });
 
-    // Main thread
+    // New Weather variable
+    let mut weather = Weather::new(ConfigDeser::load_config_args()?);
+
+    // Fetching data of weather
     let _ = weather.fetch()?;
 
     // Waiting for the second thread and getting a result
