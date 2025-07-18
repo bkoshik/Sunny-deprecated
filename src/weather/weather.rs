@@ -1,4 +1,4 @@
-use crate::modules::config::Config;
+use crate::config::config::Config;
 
 // ========== Structure for Simpler Getting Data about Weather ==========
 pub struct Weather {

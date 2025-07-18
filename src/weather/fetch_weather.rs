@@ -4,7 +4,7 @@ use chrono::NaiveTime;
 use std::io::{Error, ErrorKind};
 use reqwest::blocking::Client;
 use super::weather::Weather;
-use super::config::Units;
+use crate::config::Units;
 
 enum TimeKind {
     Time,

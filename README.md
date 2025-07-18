@@ -79,13 +79,18 @@ sunny
 ├── LICENSE
 ├── README.md
 └── src
+    ├── ascii_arts
+    │   ├── ascii_arts.rs
+    │   └── mod.rs
+    ├── config
+    │   ├── config.rs
+    │   ├── mod.rs
+    │   └── units.rs
     ├── main.rs
-    └── modules
-        ├── ascii_art.rs
-        ├── ascii_arts_db.rs
-        ├── config.rs
+    └── weather
         ├── fetch_weather.rs
         ├── fmt_lines.rs
+        ├── get_ascii_art.rs
         ├── mod.rs
         └── weather.rs
 ```

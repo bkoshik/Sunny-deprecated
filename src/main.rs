@@ -1,9 +1,11 @@
 use std::io::Error;
-use crate::modules::config::ConfigDeser;
-use crate::modules::weather::Weather;
-use crate::modules::ascii_arts::load_ascii_arts;
+use crate::ascii_arts::load_ascii_arts;
+use crate::config::ConfigDeser;
+use crate::weather::Weather;
 
-mod modules;
+mod weather;
+mod config;
+mod ascii_arts;
 
 fn main() -> Result<(), Error> {
     let mut weather = Weather::new(ConfigDeser::load_config_args()?);
