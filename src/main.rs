@@ -6,7 +6,8 @@ Main function does:
   4. Getting a result from second thread
   5. Getting ASCII art that chooses by wwo_code
   6. Getting formatted lines with name of data, separator and data
-  7. Printing information
+  7. Option<Remove colors>
+  8. Printing information
 !*/
 
 use std::io::Error;
@@ -17,6 +18,7 @@ use crate::weather::Weather;
 mod weather;
 mod config;
 mod ascii_arts;
+mod remove_colors;
 
 fn main() -> Result<(), Error> {
     // Creating new thread
@@ -24,8 +26,10 @@ fn main() -> Result<(), Error> {
         return load_ascii_arts();
     });
 
+    let config = ConfigDeser::load_config_args()?;
+
     // New Weather variable
-    let mut weather = Weather::new(ConfigDeser::load_config_args()?);
+    let mut weather = Weather::new(config);
 
     // Fetching data of weather
     let _ = weather.fetch()?;
@@ -39,11 +43,14 @@ fn main() -> Result<(), Error> {
     // Formatting lines -- Name: Data
     let lines = weather.fmt_lines();
 
+    let mut output: String = String::new();
     // Printing lines
     for (line_of_art, data) in ascii_art.iter().zip(&lines) {
-        println!("{} {}", line_of_art, data);
+        output.push_str(&format!("{} {}\n", line_of_art, data));
     }
-    println!("\n{} | {}", weather.region, weather.updated_time);
+    output.push_str(&format!("\n{} | {}", weather.region, weather.updated_time));
+
+    println!("{}", output);
 
     Ok(())
 }

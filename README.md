@@ -41,11 +41,13 @@ cargo build --release
 - `units`: Units for temperature and wind speed
     - metric
     - imperial
+- `use_colors`: Flag that removes colors
 
 ### Example:
 ```toml
 city = "Saryagash"
 units = "metric"
+use_colors = true
 ```
 
 ---
@@ -55,10 +57,11 @@ units = "metric"
 - `--units {metric/imperial}`: Units for temperature and wind speed
   - metric
   - imperial
+- `--use-colors {true/false}`: Flag that removes colors
 
 ### Example:
 ```shell
-sunny --city Saryagash --units metric
+sunny --city Saryagash --units metric --use-colors true
 ```
 
 ---

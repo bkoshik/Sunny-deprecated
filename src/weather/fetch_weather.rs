@@ -5,6 +5,7 @@ use std::io::{Error, ErrorKind};
 use reqwest::blocking::Client;
 use super::weather::Weather;
 use crate::config::Units;
+use crate::remove_colors::remove_ansi_colors;
 
 enum TimeKind {
     Time,
@@ -55,21 +56,31 @@ impl Weather {
             let temp_feel_like = remove_char(
                                  &current_data[format!("FeelsLike{}", temp_units.0)].as_str().unwrap_or("N/A"), '"'
             ).parse().unwrap_or(-128);
-            let temperature = format!("{}({}) {}",
+            let mut temperature = format!("{}({}) {}",
                                       colorize_temperature(real_temp, &self.stuff.config.units),
                                       colorize_temperature(temp_feel_like, &self.stuff.config.units),
                                       temp_units.1
             );
+            temperature = if !self.stuff.config.use_colors {
+                remove_ansi_colors(temperature)
+            } else {
+                temperature
+            };
 
             // Wind
-            let wind_dir = remove_char(current_data["winddir16Point"].as_str().unwrap_or("N/A"), '"');
-            let wind_dir = wind_direction_to_arrow(&wind_dir);
+            let mut wind_dir = remove_char(current_data["winddir16Point"].as_str().unwrap_or("N/A"), '"');
+            wind_dir = wind_direction_to_arrow(&wind_dir).to_string();
             let wind_speed = remove_char(&current_data[format!("windspeed{}", wind_units.0)].as_str().unwrap_or("N/A"), '"');
-            let wind = format!("{} {} {}",
+            let mut wind = format!("{} {} {}",
                                wind_dir,
                                colorize_wind_speed(wind_speed.parse().unwrap_or(-128), &self.stuff.config.units),
                                wind_units.1
             );
+            wind = if !self.stuff.config.use_colors {
+                remove_ansi_colors(wind)
+            } else {
+                wind
+            };
 
             // Sun Time
             let sunrise = format_time(remove_char(&data["weather"][0]["astronomy"][0]["sunrise"]

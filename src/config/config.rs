@@ -9,12 +9,14 @@ use super::units::Units;
 pub struct Config {
     pub city: String,
     pub units: Units,
+    pub use_colors: bool,
 }
 
 #[derive(Deserialize, Debug)]
 pub struct ConfigDeser {
     pub city: String,
     pub units: String,
+    pub use_colors: bool,
 }
 
 #[derive(Parser, Debug)]
@@ -23,6 +25,8 @@ pub struct Args {
     pub city: Option<String>,
     #[arg(short, long)]
     pub units: Option<Units>,
+    #[arg(long)]
+    pub use_colors: Option<bool>,
 }
 
 // ========== JSON Deserializing for https://ipinfo.io ==========
@@ -42,6 +46,7 @@ impl ConfigDeser {
         Ok(Config {
             city: ip_info.city,
             units: Units::Metric,
+            use_colors: true,
         })
     }
 
@@ -58,6 +63,7 @@ impl ConfigDeser {
                 Ok(Config {
                     city: config_toml.city,
                     units: Units::from_str(&config_toml.units)?,
+                    use_colors: config_toml.use_colors,
                 })
             }
             Err(_) => {
@@ -78,7 +84,12 @@ impl ConfigDeser {
 
         let city = args.city.clone().or_else(|| fallback.as_ref().map(|c| c.city.clone())).unwrap();
         let units = args.units.clone().or_else(|| fallback.as_ref().map(|c| c.units.clone())).unwrap();
+        let use_color = args.use_colors.clone().or_else(|| fallback.as_ref().map(|c| c.use_colors.clone())).unwrap();
 
-        return Ok(Config { city, units })
+        return Ok(Config {
+            city: city,
+            units: units,
+            use_colors: use_color
+        })
     }
 }
