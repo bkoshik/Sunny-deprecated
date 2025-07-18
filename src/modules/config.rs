@@ -66,8 +66,6 @@ impl ConfigDeser {
             .ok_or_else(|| Error::new(ErrorKind::NotFound, "Config directory not found"))?
             .join("sunny/config.toml");
 
-        println!("Loading config from: {:?}", config_path);
-
         match std::fs::read_to_string(&config_path) {
             Ok(config_str) => {
                 let config_toml: ConfigDeser = toml::from_str(&config_str)

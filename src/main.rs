@@ -1,7 +1,7 @@
 use std::io::Error;
 use crate::modules::config::ConfigDeser;
 use crate::modules::weather::Weather;
-use crate::modules::database::load_bases;
+use crate::modules::ascii_arts::load_ascii_arts;
 
 mod modules;
 
@@ -10,7 +10,7 @@ fn main() -> Result<(), Error> {
 
     // Creating new thread
     let handle_load_base = std::thread::spawn(move || {
-        return load_bases();
+        return load_ascii_arts();
     });
 
     // Main thread

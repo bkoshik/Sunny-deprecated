@@ -1,8 +1,8 @@
 use std::collections::HashMap;
 
-pub fn load_bases() -> (HashMap<String, String>, HashMap<String, Vec<String>>) {
+pub fn load_ascii_arts() -> (HashMap<String, String>, HashMap<String, Vec<String>>) {
     let mut wwo_code: HashMap<String, String> = HashMap::new();
-    let mut weather_ascii_art: HashMap<String, Vec<String>> = HashMap::new();
+    let mut ascii_art_map: HashMap<String, Vec<String>> = HashMap::new();
 
     // ========== WWO Code ==========
     wwo_code.insert("116".to_string(), "PartlyCloudy".to_string());
@@ -55,133 +55,133 @@ pub fn load_bases() -> (HashMap<String, String>, HashMap<String, Vec<String>>) {
     wwo_code.insert("395".to_string(), "HeavySnowShowers".to_string());
 
     // ========== Weather ASCII Art ==========
-    weather_ascii_art.insert("Unknown".to_string(), vec![
+    ascii_art_map.insert("Unknown".to_string(), vec![
         "    .-.      ".to_string(),
         "     __)     ".to_string(),
         "    (        ".to_string(),
         "     `-’     ".to_string(),
         "      •      ".to_string(),
     ]);
-    weather_ascii_art.insert("Sunny".to_string(), vec![
+    ascii_art_map.insert("Sunny".to_string(), vec![
         "\x1b[38;5;226m    \\   /    \x1b[0m".to_string(),
         "\x1b[38;5;226m     .-.     \x1b[0m".to_string(),
         "\x1b[38;5;226m  ― (   ) ―  \x1b[0m".to_string(),
         "\x1b[38;5;226m     `-’     \x1b[0m".to_string(),
         "\x1b[38;5;226m    /   \\    \x1b[0m".to_string(),
     ]);
-    weather_ascii_art.insert("PartlyCloudy".to_string(), vec![
+    ascii_art_map.insert("PartlyCloudy".to_string(), vec![
         "\x1b[38;5;226m   \\  /\x1b[0m      ".to_string(),
         "\x1b[38;5;226m _ /\"\"\x1b[38;5;250m.-.    \x1b[0m".to_string(),
         "\x1b[38;5;226m   \\_\x1b[38;5;250m(   ).  \x1b[0m".to_string(),
         "\x1b[38;5;226m   /\x1b[38;5;250m(___(__) \x1b[0m".to_string(),
         "             ".to_string(),
     ]);
-    weather_ascii_art.insert("Cloudy".to_string(), vec![
+    ascii_art_map.insert("Cloudy".to_string(), vec![
         "             ".to_string(),
         "\x1b[38;5;250m     .--.    \x1b[0m".to_string(),
         "\x1b[38;5;250m  .-(    ).  \x1b[0m".to_string(),
         "\x1b[38;5;250m (___.__)__) \x1b[0m".to_string(),
         "             ".to_string(),
     ]);
-    weather_ascii_art.insert("VeryCloudy".to_string(), vec![
+    ascii_art_map.insert("VeryCloudy".to_string(), vec![
         "             ".to_string(),
         "\x1b[38;5;240;1m     .--.    \x1b[0m".to_string(),
         "\x1b[38;5;240;1m  .-(    ).  \x1b[0m".to_string(),
         "\x1b[38;5;240;1m (___.__)__) \x1b[0m".to_string(),
         "             ".to_string(),
     ]);
-    weather_ascii_art.insert("LightShowers".to_string(), vec![
+    ascii_art_map.insert("LightShowers".to_string(), vec![
         "\x1b[38;5;226m _`/\"\"\x1b[38;5;250m.-.    \x1b[0m".to_string(),
         "\x1b[38;5;226m  ,\\_\x1b[38;5;250m(   ).  \x1b[0m".to_string(),
         "\x1b[38;5;226m   /\x1b[38;5;250m(___(__) \x1b[0m".to_string(),
         "\x1b[38;5;111m     ‘ ‘ ‘ ‘ \x1b[0m".to_string(),
         "\x1b[38;5;111m    ‘ ‘ ‘ ‘  \x1b[0m".to_string(),
     ]);
-    weather_ascii_art.insert("HeavyShowers".to_string(), vec![
+    ascii_art_map.insert("HeavyShowers".to_string(), vec![
         "\x1b[38;5;226m _`/\"\"\x1b[38;5;240;1m.-.    \x1b[0m".to_string(),
         "\x1b[38;5;226m  ,\\_\x1b[38;5;240;1m(   ).  \x1b[0m".to_string(),
         "\x1b[38;5;226m   /\x1b[38;5;240;1m(___(__) \x1b[0m".to_string(),
         "\x1b[38;5;21;1m   ‚‘‚‘‚‘‚‘  \x1b[0m".to_string(),
         "\x1b[38;5;21;1m   ‚’‚’‚’‚’  \x1b[0m".to_string(),
     ]);
-    weather_ascii_art.insert("LightSnowShowers".to_string(), vec![
+    ascii_art_map.insert("LightSnowShowers".to_string(), vec![
         "\x1b[38;5;226m _`/\"\"\x1b[38;5;250m.-.    \x1b[0m".to_string(),
         "\x1b[38;5;226m  ,\\_\x1b[38;5;250m(   ).  \x1b[0m".to_string(),
         "\x1b[38;5;226m   /\x1b[38;5;250m(___(__) \x1b[0m".to_string(),
         "\x1b[38;5;255m     *  *  * \x1b[0m".to_string(),
         "\x1b[38;5;255m    *  *  *  \x1b[0m".to_string(),
     ]);
-    weather_ascii_art.insert("HeavySnowShowers".to_string(), vec![
+    ascii_art_map.insert("HeavySnowShowers".to_string(), vec![
         "\x1b[38;5;226m _`/\"\"\x1b[38;5;240;1m.-.    \x1b[0m".to_string(),
         "\x1b[38;5;226m  ,\\_\x1b[38;5;240;1m(   ).  \x1b[0m".to_string(),
         "\x1b[38;5;226m   /\x1b[38;5;240;1m(___(__) \x1b[0m".to_string(),
         "\x1b[38;5;255;1m    * * * *  \x1b[0m".to_string(),
         "\x1b[38;5;255;1m   * * * *   \x1b[0m".to_string(),
     ]);
-    weather_ascii_art.insert("LightSleetShowers".to_string(), vec![
+    ascii_art_map.insert("LightSleetShowers".to_string(), vec![
         "\x1b[38;5;226m _`/\"\"\x1b[38;5;250m.-.    \x1b[0m".to_string(),
         "\x1b[38;5;226m  ,\\_\x1b[38;5;250m(   ).  \x1b[0m".to_string(),
         "\x1b[38;5;226m   /\x1b[38;5;250m(___(__) \x1b[0m".to_string(),
         "\x1b[38;5;111m     ‘ \x1b[38;5;255m*\x1b[38;5;111m ‘ \x1b[38;5;255m* \x1b[0m".to_string(),
         "\x1b[38;5;255m    *\x1b[38;5;111m ‘ \x1b[38;5;255m*\x1b[38;5;111m ‘  \x1b[0m".to_string(),
     ]);
-    weather_ascii_art.insert("ThunderyShowers".to_string(), vec![
+    ascii_art_map.insert("ThunderyShowers".to_string(), vec![
         "\x1b[38;5;226m _`/\"\"\x1b[38;5;250m.-.    \x1b[0m".to_string(),
         "\x1b[38;5;226m  ,\\_\x1b[38;5;250m(   ).  \x1b[0m".to_string(),
         "\x1b[38;5;226m   /\x1b[38;5;250m(___(__) \x1b[0m".to_string(),
         "\x1b[38;5;228;5m    ⚡\x1b[38;5;111;25m‘ ‘\x1b[38;5;228;5m⚡\x1b[38;5;111;25m‘ ‘ \x1b[0m".to_string(),
         "\x1b[38;5;111m    ‘ ‘ ‘ ‘  \x1b[0m".to_string(),
     ]);
-    weather_ascii_art.insert("ThunderyHeavyRain".to_string(), vec![
+    ascii_art_map.insert("ThunderyHeavyRain".to_string(), vec![
         "\x1b[38;5;240;1m     .-.     \x1b[0m".to_string(),
         "\x1b[38;5;240;1m    (   ).   \x1b[0m".to_string(),
         "\x1b[38;5;240;1m   (___(__)  \x1b[0m".to_string(),
         "\x1b[38;5;21;1m  ‚‘\x1b[38;5;228;5m⚡\x1b[38;5;21;25m‘‚\x1b[38;5;228;5m⚡\x1b[38;5;21;25m‚‘ \x1b[0m".to_string(),
         "\x1b[38;5;21;1m  ‚’‚’\x1b[38;5;228;5m⚡\x1b[38;5;21;25m’‚’  \x1b[0m".to_string(),
     ]);
-    weather_ascii_art.insert("ThunderySnowShowers".to_string(), vec![
+    ascii_art_map.insert("ThunderySnowShowers".to_string(), vec![
         "\x1b[38;5;226m _`/\"\"\x1b[38;5;250m.-.    \x1b[0m".to_string(),
         "\x1b[38;5;226m  ,\\_\x1b[38;5;250m(   ).  \x1b[0m".to_string(),
         "\x1b[38;5;226m   /\x1b[38;5;250m(___(__) \x1b[0m".to_string(),
         "\x1b[38;5;255m     *\x1b[38;5;228;5m⚡\x1b[38;5;255;25m*\x1b[38;5;228;5m⚡\x1b[38;5;255;25m* \x1b[0m".to_string(),
         "\x1b[38;5;255m    *  *  *  \x1b[0m".to_string(),
     ]);
-    weather_ascii_art.insert("LightRain".to_string(), vec![
+    ascii_art_map.insert("LightRain".to_string(), vec![
         "\x1b[38;5;250m     .-.     \x1b[0m".to_string(),
         "\x1b[38;5;250m    (   ).   \x1b[0m".to_string(),
         "\x1b[38;5;250m   (___(__)  \x1b[0m".to_string(),
         "\x1b[38;5;111m    ‘ ‘ ‘ ‘  \x1b[0m".to_string(),
         "\x1b[38;5;111m   ‘ ‘ ‘ ‘   \x1b[0m".to_string(),
     ]);
-    weather_ascii_art.insert("HeavyRain".to_string(), vec![
+    ascii_art_map.insert("HeavyRain".to_string(), vec![
         "\x1b[38;5;240;1m     .-.     \x1b[0m".to_string(),
         "\x1b[38;5;240;1m    (   ).   \x1b[0m".to_string(),
         "\x1b[38;5;240;1m   (___(__)  \x1b[0m".to_string(),
         "\x1b[38;5;21;1m  ‚‘‚‘‚‘‚‘   \x1b[0m".to_string(),
         "\x1b[38;5;21;1m  ‚’‚’‚’‚’   \x1b[0m".to_string(),
     ]);
-    weather_ascii_art.insert("LightSnow".to_string(), vec![
+    ascii_art_map.insert("LightSnow".to_string(), vec![
         "\x1b[38;5;250m     .-.     \x1b[0m".to_string(),
         "\x1b[38;5;250m    (   ).   \x1b[0m".to_string(),
         "\x1b[38;5;250m   (___(__)  \x1b[0m".to_string(),
         "\x1b[38;5;255m    *  *  *  \x1b[0m".to_string(),
         "\x1b[38;5;255m   *  *  *   \x1b[0m".to_string(),
     ]);
-    weather_ascii_art.insert("HeavySnow".to_string(), vec![
+    ascii_art_map.insert("HeavySnow".to_string(), vec![
         "\x1b[38;5;240;1m     .-.     \x1b[0m".to_string(),
         "\x1b[38;5;240;1m    (   ).   \x1b[0m".to_string(),
         "\x1b[38;5;240;1m   (___(__)  \x1b[0m".to_string(),
         "\x1b[38;5;255;1m   * * * *   \x1b[0m".to_string(),
         "\x1b[38;5;255;1m  * * * *    \x1b[0m".to_string(),
     ]);
-    weather_ascii_art.insert("LightSleet".to_string(), vec![
+    ascii_art_map.insert("LightSleet".to_string(), vec![
         "\x1b[38;5;250m     .-.     \x1b[0m".to_string(),
         "\x1b[38;5;250m    (   ).   \x1b[0m".to_string(),
         "\x1b[38;5;250m   (___(__)  \x1b[0m".to_string(),
         "\x1b[38;5;111m    ‘ \x1b[38;5;255m*\x1b[38;5;111m ‘ \x1b[38;5;255m*  \x1b[0m".to_string(),
         "\x1b[38;5;255m   *\x1b[38;5;111m ‘ \x1b[38;5;255m*\x1b[38;5;111m ‘   \x1b[0m".to_string(),
     ]);
-    weather_ascii_art.insert("Fog".to_string(), vec![
+    ascii_art_map.insert("Fog".to_string(), vec![
         "\x1b[38;5;251m _ - _ - _ - \x1b[0m".to_string(),
         "\x1b[38;5;251m _ - _ - _ - \x1b[0m".to_string(),
         "\x1b[38;5;251m _ - _ - _ - \x1b[0m".to_string(),
@@ -189,5 +189,5 @@ pub fn load_bases() -> (HashMap<String, String>, HashMap<String, Vec<String>>) {
         "\x1b[38;5;251m _ - _ - _ - \x1b[0m".to_string(),
     ]);
 
-    return (wwo_code, weather_ascii_art)
+    return (wwo_code, ascii_art_map)
 }
