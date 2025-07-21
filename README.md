@@ -4,6 +4,7 @@
 - **[Configuration](#configuration)**
 - **[Command Line Args](#command-line-args)**
 - **[Architecture](#architecture)**
+- **[Changelog](CHANGELOG.md)**
 
 ### Example:
 [![example](img/example.png)](img/example.png)
