@@ -43,14 +43,12 @@ fn main() -> Result<(), Error> {
     // Formatting lines -- Name: Data
     let lines = weather.fmt_lines();
 
-    let mut output: String = String::new();
     // Printing lines
-    for (line_of_art, data) in ascii_art.iter().zip(&lines) {
-        output.push_str(&format!("{} {}\n", line_of_art, data));
+    for i in 0..5.max(lines.len()) {
+        let ascii = ascii_art.get(i).unwrap_or(&"".to_string()).to_string();
+        let info = lines.get(i).unwrap_or(&"".to_string()).to_string();
+        println!("{:<13} {}", ascii, info);
     }
-    output.push_str(&format!("\n{} | {}", weather.region, weather.updated_time));
-
-    println!("{}", output);
 
     Ok(())
 }

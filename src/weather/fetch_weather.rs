@@ -92,6 +92,9 @@ impl Weather {
             // UV-Index
             let uv_index = remove_char(&current_data["uvIndex"].to_string(), '"');
 
+            // Humidity
+            let humidity = format!("{}%", remove_char(&current_data["humidity"].to_string(), '"'));
+
             self.region = region;
             self.updated_time = updated_time;
 
@@ -100,6 +103,7 @@ impl Weather {
             self.wind = wind;
             self.suntime = suntime;
             self.uv_index = uv_index;
+            self.humidity = humidity;
 
             self.stuff.code_of_weather = remove_char(current_data["weatherCode"].as_str().unwrap_or("N/A"), '"');
 

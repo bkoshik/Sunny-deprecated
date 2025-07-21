@@ -10,6 +10,7 @@ pub struct Weather {
     pub wind: String,
     pub suntime: String,
     pub uv_index: String,
+    pub humidity: String,
 
     pub stuff: Stuff,
 }
@@ -35,6 +36,7 @@ impl Weather {
             wind: String::new(),
             suntime: String::new(),
             uv_index: String::new(),
+            humidity: String::new(),
 
             stuff: stuff
         }
