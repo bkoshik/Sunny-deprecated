@@ -20,8 +20,8 @@ impl Weather {
             .unwrap_or(&unknown);
 
         if !self.stuff.config.use_colors {
-            let art_witohut_color = remove_colors(ascii_art.join("\n"));
-            return Ok(art_witohut_color.lines().map(|s| s.to_string()).collect());
+            let art_without_color = remove_colors(ascii_art.join("\n"));
+            return Ok(art_without_color.lines().map(|s| s.to_string()).collect());
         }
 
         return Ok(ascii_art.clone());
