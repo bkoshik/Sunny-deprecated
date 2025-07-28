@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.1.4]
+### Add
+- Good accessibility for weather data
+
 ## [0.1.3]
 ### Added
 - Display of Country, Region, Area names
