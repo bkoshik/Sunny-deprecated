@@ -36,7 +36,7 @@ fn main() -> Result<(), Error> {
 
     // Getting ASCII art of weather
     let ascii_art = weather.get_ascii_art(wwo_code, ascii_art_db)?;
-    
+
     // Formatting lines
     let info_lines = vec![
         format!("Description: {}", weather.description),
@@ -46,8 +46,9 @@ fn main() -> Result<(), Error> {
         format!("UV Index: {}", weather.uv_index),
         format!("Humidity: {}", weather.humidity),
     ];
-    
+
     // Printing lines
+    println!("Report: {} | {}\n", weather.region, weather.updated_time);
     for i in 0..5.max(info_lines.len()) {
         let ascii = ascii_art.get(i).unwrap_or(&"".to_string()).to_string();
         let info = info_lines.get(i).unwrap_or(&"".to_string()).to_string();
