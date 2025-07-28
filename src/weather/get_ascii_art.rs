@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::io::Error;
-use crate::remove_colors::remove_ansi_colors;
 use super::weather::Weather;
+use super::utils::format::remove_colors;
 
 // ========== ╭──────────────────────────────╮ ==========
 // ========== | Getting ASCII Art of Weather | ==========
@@ -20,7 +20,7 @@ impl Weather {
             .unwrap_or(&unknown);
 
         if !self.stuff.config.use_colors {
-            let art_witohut_color = remove_ansi_colors(ascii_art.join("\n"));
+            let art_witohut_color = remove_colors(ascii_art.join("\n"));
             return Ok(art_witohut_color.lines().map(|s| s.to_string()).collect());
         }
 

@@ -18,13 +18,10 @@ use crate::weather::Weather;
 mod weather;
 mod config;
 mod ascii_arts;
-mod remove_colors;
 
 fn main() -> Result<(), Error> {
     // Creating new thread
-    let handle_load_base = std::thread::spawn(move || {
-        return load_ascii_arts();
-    });
+    let handle_load_base = std::thread::spawn(load_ascii_arts);
 
     let config = ConfigDeser::load_config_args()?;
 
@@ -39,14 +36,21 @@ fn main() -> Result<(), Error> {
 
     // Getting ASCII art of weather
     let ascii_art = weather.get_ascii_art(wwo_code, ascii_art_db)?;
-
-    // Formatting lines -- Name: Data
-    let lines = weather.fmt_lines();
-
+    
+    // Formatting lines
+    let info_lines = vec![
+        format!("Description: {}", weather.description),
+        format!("Temperature: {}", weather.temperature),
+        format!("Wind: {}", weather.wind),
+        format!("Suntime: {} - {}", weather.sunrise, weather.sunset),
+        format!("UV Index: {}", weather.uv_index),
+        format!("Humidity: {}", weather.humidity),
+    ];
+    
     // Printing lines
-    for i in 0..5.max(lines.len()) {
+    for i in 0..5.max(info_lines.len()) {
         let ascii = ascii_art.get(i).unwrap_or(&"".to_string()).to_string();
-        let info = lines.get(i).unwrap_or(&"".to_string()).to_string();
+        let info = info_lines.get(i).unwrap_or(&"".to_string()).to_string();
         println!("{:<13} {}", ascii, info);
     }
 

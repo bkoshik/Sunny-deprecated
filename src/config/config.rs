@@ -7,14 +7,14 @@ use super::units::Units;
 // ========== Main Config ==========
 #[derive(Debug)]
 pub struct Config {
-    pub city: String,
+    pub location: String,
     pub units: Units,
     pub use_colors: bool,
 }
 
 #[derive(Deserialize, Debug)]
 pub struct ConfigDeser {
-    pub city: String,
+    pub location: String,
     pub units: String,
     pub use_colors: bool,
 }
@@ -22,7 +22,7 @@ pub struct ConfigDeser {
 #[derive(Parser, Debug)]
 pub struct Args {
     #[arg(short, long)]
-    pub city: Option<String>,
+    pub location: Option<String>,
     #[arg(short, long)]
     pub units: Option<Units>,
     #[arg(long)]
@@ -44,7 +44,7 @@ impl ConfigDeser {
             .map_err(|e| Error::new(ErrorKind::Other, e))?;
 
         Ok(Config {
-            city: ip_info.city,
+            location: ip_info.city,
             units: Units::Metric,
             use_colors: true,
         })
@@ -61,7 +61,7 @@ impl ConfigDeser {
                     .map_err(|e| Error::new(ErrorKind::InvalidData, format!("TOML parse error: {}", e)))?;
 
                 Ok(Config {
-                    city: config_toml.city,
+                    location: config_toml.location,
                     units: Units::from_str(&config_toml.units)?,
                     use_colors: config_toml.use_colors,
                 })
@@ -76,18 +76,18 @@ impl ConfigDeser {
         let args = Args::parse();
 
         // Один раз читаем конфиг, если нужно
-        let fallback = if args.city.is_none() || args.units.is_none() {
+        let fallback = if args.location.is_none() || args.units.is_none() {
             Some(Self::load_config_file()?)
         } else {
             None
         };
 
-        let city = args.city.clone().or_else(|| fallback.as_ref().map(|c| c.city.clone())).unwrap();
+        let location = args.location.clone().or_else(|| fallback.as_ref().map(|c| c.location.clone())).unwrap();
         let units = args.units.clone().or_else(|| fallback.as_ref().map(|c| c.units.clone())).unwrap();
         let use_color = args.use_colors.clone().or_else(|| fallback.as_ref().map(|c| c.use_colors.clone())).unwrap();
 
         return Ok(Config {
-            city: city,
+            location: location,
             units: units,
             use_colors: use_color
         })

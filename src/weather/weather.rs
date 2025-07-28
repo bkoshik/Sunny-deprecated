@@ -8,7 +8,8 @@ pub struct Weather {
     pub description: String,
     pub temperature: String,
     pub wind: String,
-    pub suntime: String,
+    pub sunrise: String,
+    pub sunset: String,
     pub uv_index: String,
     pub humidity: String,
 
@@ -34,7 +35,8 @@ impl Weather {
             description: String::new(),
             temperature: String::new(),
             wind: String::new(),
-            suntime: String::new(),
+            sunrise: String::new(),
+            sunset: String::new(),
             uv_index: String::new(),
             humidity: String::new(),
 
