@@ -75,26 +75,31 @@ sunny --city Saryagash --units metric --use-colors true
 
 ### File System
 ```text
-sunny
+Sunny
 ├── Cargo.lock
 ├── Cargo.toml
-├── img
-│   └── example.png
 ├── LICENSE
 ├── README.md
+├── CHANGELOG.md
+├── img
+│   └── example.png
 └── src
     ├── ascii_arts
-    │   ├── ascii_arts.rs
-    │   └── mod.rs
-    ├── config
-    │   ├── config.rs
     │   ├── mod.rs
+    │   └── ascii_arts.rs
+    ├── config
+    │   ├── mod.rs
+    │   ├── config.rs
     │   └── units.rs
     ├── main.rs
     └── weather
-        ├── fetch_weather.rs
-        ├── fmt_lines.rs
-        ├── get_ascii_art.rs
+        ├── utils
+        │   ├── mod.rs 
+        │   ├── format.rs
+        │   ├── get_data.rs
+        │   └── colorize.rs
         ├── mod.rs
+        ├── get_ascii_art.rs
+        ├── fetch_weather.rs
         └── weather.rs
 ```
