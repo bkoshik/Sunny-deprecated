@@ -14,6 +14,7 @@ use std::io::Error;
 use crate::ascii_arts::load_ascii_arts;
 use crate::config::ConfigDeser;
 use crate::weather::Weather;
+use crate::weather::render::render_weather;
 
 mod weather;
 mod config;
@@ -37,23 +38,28 @@ fn main() -> Result<(), Error> {
     // Getting ASCII art of weather
     let ascii_art = weather.get_ascii_art(wwo_code, ascii_art_db)?;
 
-    // Formatting lines
+    // Formatting lines into vec
     let info_lines = vec![
-        format!("Description: {}", weather.description),
-        format!("Temperature: {}", weather.temperature),
-        format!("Wind: {}", weather.wind),
-        format!("Suntime: {} - {}", weather.sunrise, weather.sunset),
-        format!("UV Index: {}", weather.uv_index),
-        format!("Humidity: {}", weather.humidity),
+        "Description: {description}",
+        "Temperature: {temperature}",
+        "Wind: {wind}",
+        "Suntime: {sunrise} - {sunset}",
+        "UV Index: {uv_index}",
+        "Humidity: {humidity}",
     ];
 
-    // Printing lines
-    println!("Report: {} ─ {} | {}\n", weather.country, weather.area, weather.updated_time);
+    // Formatting lines into String
+    let mut output = String::new();
+
+    output.push_str("Report: {country} ─ {area} | {updated_time}\n\n");
     for i in 0..5.max(info_lines.len()) {
         let ascii = ascii_art.get(i).unwrap_or(&"".to_string()).to_string();
-        let info = info_lines.get(i).unwrap_or(&"".to_string()).to_string();
-        println!("{:<13} {}", ascii, info);
+        let info = info_lines.get(i).unwrap_or(&"").to_string();
+        output.push_str(&format!("{:<13} {}\n", ascii, info));
     }
+
+    // Printing lines
+    println!("{}", render_weather(&output, &weather));
 
     Ok(())
 }

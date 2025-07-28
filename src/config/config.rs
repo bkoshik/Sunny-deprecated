@@ -75,7 +75,6 @@ impl ConfigDeser {
     pub fn load_config_args() -> Result<Config, Error> {
         let args = Args::parse();
 
-        // Один раз читаем конфиг, если нужно
         let fallback = if args.location.is_none() || args.units.is_none() {
             Some(Self::load_config_file()?)
         } else {

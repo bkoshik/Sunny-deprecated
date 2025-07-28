@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use std::io::{Error, ErrorKind};
 use reqwest::blocking::Client;
 use crate::config::Units;
-use super::weather::Weather;
+use super::Weather;
 use super::utils::*;
 
 // ========== ╭──────────────────────────╮ ==========
@@ -24,7 +24,7 @@ impl Weather {
         };
 
         if let Ok(data) = response.json::<serde_json::Value>() {
-            // ((for wttr.in, for format!), (for wttr.in, for format!), for suntime, for updated_time)
+            // ((for wttr.in, for display), (for wttr.in, for display), for suntime, for updated_time)
             let (temp_units, wind_units, time_format, timestamp_format) = match self.stuff.config.units {
                 Units::Metric => (("C", "°C"), ("Kmph", "km/h"), "%H:%M", "%d.%m.%Y %H:%H"),
                 Units::Imperial => (("F", "°F"), ("Miles", "mph"), "%I:%M %p", "%Y-%m-%d %I:%M %p"),

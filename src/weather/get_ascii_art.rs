@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 use std::io::Error;
-use super::weather::Weather;
+use super::Weather;
 use super::utils::format::remove_colors;
 
 // ========== ╭──────────────────────────────╮ ==========
