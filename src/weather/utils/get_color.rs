@@ -1,6 +1,6 @@
 use crate::config::Units;
 
-pub fn colorize_temperature(temp: &str, units: &Units) -> String {
+pub fn get_color_temperature(temp: &str, units: &Units) -> String {
     let temp_int = temp.parse().unwrap_or(-128);
 
     let color = match units {
@@ -22,10 +22,10 @@ pub fn colorize_temperature(temp: &str, units: &Units) -> String {
         },
     };
 
-    return format!("\x1b[{}m{}\x1b[0m", color, temp)
+    return color.to_string()
 }
 
-pub fn colorize_wind_speed(speed: &str, units: &Units) -> String {
+pub fn get_color_wind_speed(speed: &str, units: &Units) -> String {
     let speed_int = speed.parse().unwrap_or(-128);
 
     let color = match units {
@@ -45,10 +45,10 @@ pub fn colorize_wind_speed(speed: &str, units: &Units) -> String {
         },
     };
 
-    return format!("\x1b[{}m{}\x1b[0m", color, speed)
+    return color.to_string()
 }
 
-pub fn colorize_uv_index(uvi: &str, uvi_name: &str) -> String {
+pub fn get_color_uv_index(uvi: &str) -> String {
     let uvi_int = uvi.parse().unwrap_or(-128);
 
     let uvi_color = match uvi_int {
@@ -60,5 +60,5 @@ pub fn colorize_uv_index(uvi: &str, uvi_name: &str) -> String {
     };
 
 
-    return format!("\x1b[{}m{} {}\x1b[0m", uvi_color, uvi, uvi_name);
+    return uvi_color.to_string()
 }

@@ -32,10 +32,16 @@ impl Weather {
 
             let current_data = &data["current_condition"][0];
 
-            let region = format!("{} — {}",
-                                 format::remove_char(&data["nearest_area"][0]["country"][0]["value"]),
-                                 format::remove_char(&data["nearest_area"][0]["areaName"][0]["value"]));
+            // Area
+            let area = format!("{}", format::remove_char(&data["nearest_area"][0]["areaName"][0]["value"]));
 
+            // Region
+            let region = format!("{}", format::remove_char(&data["nearest_area"][0]["region"][0]["value"]));
+
+            // Country
+            let country = format!("{}", format::remove_char(&data["nearest_area"][0]["country"][0]["value"]));
+
+            // Updated time
             let updated_time = format::format_time(
                 &format::remove_char(&current_data["localObsDateTime"]), "%Y-%m-%d %I:%M %p", timestamp_format, format::TimeKind::DateTime)?;
 
@@ -43,48 +49,75 @@ impl Weather {
             let description = format::remove_char(&current_data["weatherDesc"][0]["value"]);
 
             // Temperature
-            let temp = format::remove_char(&current_data[format!("temp_{}", temp_units.0)]);
-            let temp_feels = format::remove_char(&current_data[format!("FeelsLike{}", temp_units.0)]);
-            let temp_display = format!("{}({}) {}",
-                                       colorize::colorize_temperature(&temp, &self.stuff.config.units),
-                                       colorize::colorize_temperature(&temp_feels, &self.stuff.config.units),
-                                       temp_units.1
-            );
-            let temperature_output = if !self.stuff.config.use_colors {
-                format::remove_colors(temp_display)
-            } else {
-                temp_display
+            let temperature = {
+                let temp = format::remove_char(&current_data[format!("temp_{}", temp_units.0)]);
+                let temp_feels = format::remove_char(&current_data[format!("FeelsLike{}", temp_units.0)]);
+
+                let temp_color = get_color::get_color_temperature(&temp, &self.stuff.config.units);
+                let temp_feels_color = get_color::get_color_temperature(&temp_feels, &self.stuff.config.units);
+
+                let temp_colored = format!("\x1b[{}m{}\x1b[0m", temp_color, temp);
+                let temp_feels_colored = format!("\x1b[{}m{}\x1b[0m", temp_feels_color, temp_feels);
+
+                let temp_display = format!("{}({}) {}", temp_colored, temp_feels_colored, temp_units.1);
+
+                if !self.stuff.config.use_colors {
+                    format::remove_colors(temp_display)
+                } else {
+                    temp_display
+                }
             };
 
             // Wind
-            let wind_dir_code = format::remove_char(&current_data["winddir16Point"]);
-            let wind_dir_arrow = get_data::get_arrow_of_wind_direction(&wind_dir_code).to_string();
-            let wind_speed_raw = format::remove_char(&current_data[format!("windspeed{}", wind_units.0)]);
-            let wind_display = format!("{} {} {}",
-                                       wind_dir_arrow,
-                                       colorize::colorize_wind_speed(&wind_speed_raw, &self.stuff.config.units),
-                                       wind_units.1
-            );
-            let wind_output = if !self.stuff.config.use_colors {
-                format::remove_colors(wind_display)
-            } else {
-                wind_display
+            let wind = {
+                let wind_dir_point = format::remove_char(&current_data["winddir16Point"]);
+                let wind_dir_arrow = get_data::get_arrow_of_wind_direction(&wind_dir_point).to_string();
+                let wind_speed_raw = format::remove_char(&current_data[format!("windspeed{}", wind_units.0)]);
+
+                let wind_speed_color = get_color::get_color_wind_speed(&wind_speed_raw, &self.stuff.config.units);
+
+                let wind_speed_colored = format!("\x1b[{}m{}\x1b[0m", wind_speed_color, wind_speed_raw);
+
+                let wind_display = format!("{} {} {}", wind_dir_arrow, wind_speed_colored, wind_units.1);
+
+                if !self.stuff.config.use_colors {
+                    format::remove_colors(wind_display)
+                } else {
+                    wind_display
+                }
             };
 
-            // Sun Time
-            let sunrise = format::format_time(format::remove_char(&data["weather"][0]["astronomy"][0]["sunrise"])
-                                          .as_str(), "%I:%M %p", time_format, format::TimeKind::Time)?;
-            let sunset = format::format_time(format::remove_char(&data["weather"][0]["astronomy"][0]["sunset"])
-                                         .as_str(), "%I:%M %p", time_format, format::TimeKind::Time)?;
+            // Sunrise
+            let sunrise = format::format_time(
+                format::remove_char(&data["weather"][0]["astronomy"][0]["sunrise"]).as_str(),
+                "%I:%M %p",
+                time_format,
+                format::TimeKind::Time)?;
+
+            // Sunset
+            let sunset = format::format_time(
+                format::remove_char(&data["weather"][0]["astronomy"][0]["sunset"]).as_str(),
+                "%I:%M %p",
+                time_format,
+                format::TimeKind::Time)?;
 
             // UV-Index
-            let uv_index = format::remove_char(&current_data["uvIndex"]);
-            let uv_index_name = get_data::get_name_of_uvi(&uv_index);
-            let uv_index_display = colorize::colorize_uv_index(&uv_index, &uv_index_name);
-            let uv_index_output = if !self.stuff.config.use_colors {
-                format::remove_colors(uv_index)
-            } else {
-                uv_index_display
+            let uv_index = {
+                let uv_index = format::remove_char(&current_data["uvIndex"]);
+                let uv_index_label = get_data::get_name_of_uvi(&uv_index);
+
+                let uv_index_color = get_color::get_color_uv_index(&uv_index);
+
+                let uv_index_colored = format!("\x1b[{}m{}\x1b[0m", uv_index_color, uv_index);
+                let uv_index_label_colored = format!("\x1b[{}m{}\x1b[0m", uv_index_color, uv_index_label);
+
+                let uv_index_display = format!("{} {}", uv_index_colored, uv_index_label_colored);
+
+                if !self.stuff.config.use_colors {
+                    format::remove_colors(uv_index)
+                } else {
+                    uv_index_display
+                }
             };
 
             // Humidity
@@ -93,15 +126,17 @@ impl Weather {
             // Code of Weather
             let code_of_weather = format::remove_char(&current_data["weatherCode"]);
 
+            self.area = area;
             self.region = region;
+            self.country = country;
             self.updated_time = updated_time;
 
             self.description = description;
-            self.temperature = temperature_output;
-            self.wind = wind_output;
+            self.temperature = temperature;
+            self.wind = wind;
             self.sunrise = sunrise;
             self.sunset = sunset;
-            self.uv_index = uv_index_output;
+            self.uv_index = uv_index;
             self.humidity = humidity;
 
             self.stuff.code_of_weather = code_of_weather;

@@ -2,7 +2,9 @@ use crate::config::config::Config;
 
 // ========== Structure for Simpler Getting Data about Weather ==========
 pub struct Weather {
+    pub area: String,
     pub region: String,
+    pub country: String,
     pub updated_time: String,
 
     pub description: String,
@@ -29,7 +31,9 @@ impl Weather {
         };
 
         return Self {
+            area: String::new(),
             region: String::new(),
+            country: String::new(),
             updated_time: String::new(),
 
             description: String::new(),

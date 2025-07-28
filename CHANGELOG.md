@@ -1,18 +1,28 @@
 # Changelog
 
+## [0.1.3]
+### Added
+- Display of Country, Region, Area names
+
+### Changed
+- Further refactored [`fetch_weather`](src/weather/fetch_weather.rs) for readability and structure
+- Renamed several variables for clarity
+- Minor bugfix in parsing logic
+
 ## [0.1.2]
 ### Added
-- Color of UV Index
-- Name of UV Index
-### Changes
-- Big refactoring of [fetch_weather](src/weather/fetch_weather.rs)
-- Renamed names of variables
-- All functions not in Weather (struct) moved to [utils](src/weather/utils)
-- Some small changes
+- Display of UV Index color
+- Label for UV Index value
+
+### Changed
+- Major refactor of [`fetch_weather`](src/weather/fetch_weather.rs)
+- Moved helper functions from `Weather` struct to [`utils`](src/weather/utils)
+- Renamed internal variables for better naming consistency
+- Minor code improvements
 
 ## [0.1.1]
 ### Added
-- Humidity 
+- Display of humidity percentage
 
 ### Changed
-- Now printing info & ascii art works like in Neofetch
+- Improved info output and ASCII art to match Neofetch style

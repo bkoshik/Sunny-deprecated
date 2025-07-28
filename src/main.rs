@@ -48,7 +48,7 @@ fn main() -> Result<(), Error> {
     ];
 
     // Printing lines
-    println!("Report: {} | {}\n", weather.region, weather.updated_time);
+    println!("Report: {} ─ {} | {}\n", weather.country, weather.region, weather.updated_time);
     for i in 0..5.max(info_lines.len()) {
         let ascii = ascii_art.get(i).unwrap_or(&"".to_string()).to_string();
         let info = info_lines.get(i).unwrap_or(&"".to_string()).to_string();
